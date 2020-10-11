@@ -123,7 +123,7 @@
             const time = menu.isOpen() ? 100 : 0;
             menu.hide();
             setTimeout(() => { menu.show(evt.originalEvent.pageX, evt.originalEvent.pageY) }, time);
-            document.addEventListener('click', hideContextMenu, false);
+            document.addEventListener('click', hideContextMenu, true);
             menu.menu.children[1].onclick = () => {
                 var dummy = document.createElement("textarea");
                 document.body.appendChild(dummy);
@@ -234,7 +234,7 @@
             
             function categoryClick(groupList) {
                 return function () {
-                    var atLeastOneOn = false;
+                    var atLeastOneOn = true;
                     for (var i = 0; i < groupList.length; i++)
                         if (!groupList[i].classList.contains("strikeout")) {
                             atLeastOneOn = true; break;
@@ -299,12 +299,12 @@
         function LoadAllMarkers() {
             AllMarkers = [];
             LocationMarkers = [];
-            //AllMarkersData = JSON.parse(localStorage["AllMarkers"]); load data from local storage
+            //AllMarkersData = JSON.parse(localStorage["AllMarkers"]); //load data from local storage
             AllMarkersData = JSON.parse(getAllMarkersData());           //load data from markers.js
             AllMarkersData.forEach((item) => {
                 var info = item;
                 var marker = L.marker([info.lat, info.lng], {
-                    draggable: false,
+                    draggable: true,
                     id: info.id,
                     group: info.group,
                     category: info.category,
@@ -317,12 +317,12 @@
                 marker.addEventListener('contextmenu', openContextMenu);
                 AllMarkers.push(marker);
             });
-            //AllLocationsData = JSON.parse(localStorage["AllLocationMarkers"]);  load data from local storage
+            //AllLocationsData = JSON.parse(localStorage["AllLocationMarkers"]);  //load data from local storage
             AllLocationsData = JSON.parse(getLocationMarkersData());            //load data from markers.js
             AllLocationsData.forEach((item) => {
                 var info = item;
                 var marker = L.marker([info.lat, info.lng], {
-                    draggable: false,
+                    draggable: true,
                     id: info.id,
                     icon: L.divIcon({ className: 'location-marker', html: '<div class="location-name">' + info.location + '</div>' }),
                     location: info.location
